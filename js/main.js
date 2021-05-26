@@ -1,11 +1,10 @@
 
+
 $(function () { // a short-hand for: $(document).ready(function() { ... });
     // ensure that the function is called once all the DOM elements
     // of the page are ready to be used.
 
-    var i;
-    for (i = 0; i < cars.length; i++) {
-        text += cars[i] + "<br>";
+    for (i = 0; i < data.SENTENCES.length; i++) {
         sentence = data.SENTENCES
         emotion = data.EMOTION
         V = data.V
@@ -20,7 +19,4 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
         + "</tr>"
         $("#vertical_part").append();
     }
-
-
-
-}
+});
