@@ -11,8 +11,41 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
          for (i = 0; i < data.SENTENCES.length; i++) {
             V = data.V[i]
             color_v = constants.COLOR_VAD[V]
-            var v_tag = '<td style=background-color:' + color_v + ';">1</td>'
-            + v_tag
+            var v_tag = '<td style=background-color:' + color_v + ';">11</td>'
+            str = str + v_tag
+         }
+         str = str + "</tr>"
+         $("#horizontal_view").append(str);
+
+           // A line
+           str = "<tr>"
+         for (i = 0; i < data.SENTENCES.length; i++) {
+            V = data.A[i]
+            color_v = constants.COLOR_VAD[V]
+            var v_tag = '<td style=background-color:' + color_v + ';">11</td>'
+            str = str + v_tag
+         }
+         str = str + "</tr>"
+         $("#horizontal_view").append(str);
+
+         // D line
+           str = "<tr>"
+         for (i = 0; i < data.SENTENCES.length; i++) {
+            V = data.D[i]
+            color_v = constants.COLOR_VAD[V]
+            var v_tag = '<td style=background-color:' + color_v + ';">11</td>'
+            str = str + v_tag
+         }
+         str = str + "</tr>"
+         $("#horizontal_view").append(str);
+
+         // Emotions
+         str = "<tr>"
+         for (i = 0; i < data.SENTENCES.length; i++) {
+            emotion = data.EMOTIONS[i]
+            emotion_string = constants.EMOTION_DICT2[emotion]
+            var emotion_image_tag = '<img src="' + constants.IMAGE_DIR + '/' + emotion_string + '.png" width="15" height="15">'
+            str = str + "<td>" + emotion_image_tag + "</td>"
          }
          str = str + "</tr>"
          $("#horizontal_view").append(str);
@@ -31,9 +64,9 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
              color_v = constants.COLOR_VAD[V]
             color_a = constants.COLOR_VAD[A]
             color_d = constants.COLOR_VAD[D]
-            var v_tag = '<td style=background-color:' + color_v + ';">1</td>'
-            var a_tag = '<td style=background-color:' + color_a + ';" 1>1</td>'
-            var d_tag = '<td style=background-color:' + color_d + ';" 1>1</td>'
+            var v_tag = '<td style="background-color:' + color_v + ';foreground-color:'+ color_v + ';">11</td>'
+            var a_tag = '<td style="background-color:' + color_a + ';foreground-color:'+ color_a + ';">11</td>'
+            var d_tag = '<td style="background-color:' + color_d + ';foreground-color:'+ color_d + ';">11</td>'
 
             str = "<tr>"
             + "<td>" + emotion_image_tag + "</td>"
