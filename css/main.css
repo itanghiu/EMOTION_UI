@@ -11,3 +11,8 @@ table {
      padding-bottom: 30px;
      #border-collapse: collapse;
 }
+
+img {
+    width:15px
+    height:15px
+}

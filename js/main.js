@@ -39,9 +39,11 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
             emotion = data.EMOTIONS[i]
             emotion_string = constants.EMOTION_DICT2[emotion]
             var emotion_image_tag = '<img src="' + constants.IMAGE_DIR + '/' + emotion_string + '.png" width="15" height="15">'
-            str = str + '<td style="background-color:#FFFFFF;">' + emotion_image_tag + "</td>"
+            str += '<td style="background-color:#FFFFFF;">' + emotion_image_tag + "</td>"
+            //var emotion_image_tag = constants.IMAGE_DIR + '/' + emotion_string
+            //str += '<td style="background: url(' + emotion_image_tag + ') left center no-repeat;background-color:#FFFFFF;"/>'
          }
-         str = str + "</tr>"
+         str += "</tr>"
          $("#horizontal_view").append(str);
      }
 
@@ -75,7 +77,7 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
             + v_tag
             + a_tag
             + d_tag
-             + "<td>" + sentence + "</td>"
+             + '<td id="row_' + i + '">' + sentence + "</td>"
             + "</tr>"
             $("#vertical_view").append(str);
         }
@@ -83,9 +85,6 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
 
     horizontal_view();
     vertical_view();
-
-    //$( "#horizontal_view" ).click(function() {
-    //    alert( "Handler for .click() called." );
 
     $("#horizontal_view tr:has(td)").mouseover(function(e) {
          $(this).css("cursor", "pointer");
@@ -97,7 +96,14 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
          //clickedCell.addClass("highlight");
          var cell_index = e.target.cellIndex
          vertical_view(cell_index);
-         //$("#spnText").html('Clicked table cell value is: <b> ' + clickedCell.text() + '</b>');
+
+         var rowId = '#row_' + cell_index;
+         var container = $('div');
+         var scrollTo = $(rowId);
+
+        container.animate({
+            scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+        });
     });
 
 });
