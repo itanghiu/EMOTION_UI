@@ -23,15 +23,15 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
     function horizontal_view() {
            // V line
          str =  horizontal_vad('V')
-         $("#horizontal_view").append(str);
+         $("#top_table").append(str);
 
            // A line
          str =  horizontal_vad('A')
-         $("#horizontal_view").append(str);
+         $("#top_table").append(str);
 
          // D line
          str =  horizontal_vad('D')
-         $("#horizontal_view").append(str);
+         $("#top_table").append(str);
 
          // Emotions
          str = "<tr>"
@@ -44,12 +44,12 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
             //str += '<td style="background: url(' + emotion_image_tag + ') left center no-repeat;background-color:#FFFFFF;"/>'
          }
          str += "</tr>"
-         $("#horizontal_view").append(str);
+         $("#top_table").append(str);
      }
 
     // vertical display
     function vertical_view(sentence_index) {
-        $("#vertical_view").empty();
+        $("#bottom_table").empty();
         for (i = 0; i < data.SENTENCES.length; i++) {
             sentence = data.SENTENCES[i]
             emotion = data.EMOTIONS[i]
@@ -79,19 +79,22 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
             + d_tag
              + '<td id="row_' + i + '">' + sentence + "</td>"
             + "</tr>"
-            $("#vertical_view").append(str);
+            $("#bottom_table").append(str);
         }
     }
 
     horizontal_view();
     vertical_view();
 
-    $("#horizontal_view tr:has(td)").mouseover(function(e) {
+    $("#top_table tr:has(td)").mouseover(function(e) {
          $(this).css("cursor", "pointer");
     });
 
-    $("#horizontal_view tr:has(td)").click(function(e) {
-         $("#horizontal_view td").removeClass("highlight");
+    /*  when a column is clicked in the horizontal panel :
+          - the vertical table is scrolled until the corresponding sentence is visible
+    */
+    $("#top_table tr:has(td)").click(function(e) {
+         $("#top_table td").removeClass("highlight");
          var clickedCell= $(e.target).closest("td");
          //clickedCell.addClass("highlight");
          var cell_index = e.target.cellIndex
