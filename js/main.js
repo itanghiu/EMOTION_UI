@@ -21,17 +21,19 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
 
     // horizontal display
     function horizontal_view() {
+
+        var topTable = $("#top_table")
            // V line
          str =  horizontal_vad('V')
-         $("#top_table").append(str);
+         topTable.append(str);
 
            // A line
          str =  horizontal_vad('A')
-         $("#top_table").append(str);
+         topTable.append(str);
 
          // D line
          str =  horizontal_vad('D')
-         $("#top_table").append(str);
+         topTable.append(str);
 
          // Emotions
          str = "<tr>"
@@ -44,12 +46,14 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
             //str += '<td style="background: url(' + emotion_image_tag + ') left center no-repeat;background-color:#FFFFFF;"/>'
          }
          str += "</tr>"
-         $("#top_table").append(str);
+         topTable.append(str);
      }
 
     // vertical display
-    function vertical_view(sentence_index) {
-        $("#bottom_table").empty();
+    function vertical_view(sentenceIndex) {
+
+        var bottomTable = $("#bottom_table")
+        bottomTable.empty();
         for (i = 0; i < data.SENTENCES.length; i++) {
             sentence = data.SENTENCES[i]
             emotion = data.EMOTIONS[i]
@@ -57,29 +61,29 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
             V = data.V[i]
             A =  data.A[i]
             D =  data.D[i]
-            var emotion_image_tag = '<img src="' + constants.IMAGE_DIR + '/' + emotion_string + '.png" width="15" height="15">'
-            color_v = constants.COLOR_VAD[V]
-            color_a = constants.COLOR_VAD[A]
-            color_d = constants.COLOR_VAD[D]
-            color_v = Utils.updateColor(color_v.substring(1))
-            color_a = Utils.updateColor(color_a.substring(1))
-            color_d = Utils.updateColor(color_d.substring(1))
+            var emotionImageTag = '<img src="' + constants.IMAGE_DIR + '/' + emotion_string + '.png" width="15" height="15">'
+            colorV = constants.COLOR_VAD[V]
+            colorA = constants.COLOR_VAD[A]
+            colorD = constants.COLOR_VAD[D]
+            colorV = Utils.updateColor(colorV.substring(1))
+            colorA = Utils.updateColor(colorA.substring(1))
+            colorD = Utils.updateColor(colorD.substring(1))
 
-            var v_tag = '<td style="background-color:' + color_v + ';color:'+ color_v + ';">11</td>'
-            var a_tag = '<td style="background-color:' + color_a + ';color:'+ color_a + ';">11</td>'
-            var d_tag = '<td style="background-color:' + color_d + ';color:'+ color_d + ';">11</td>'
+            var vTag = '<td style="background-color:' + colorV + ';color:'+ colorV + ';">11</td>'
+            var aTag = '<td style="background-color:' + colorA + ';color:'+ colorA + ';">11</td>'
+            var dTag = '<td style="background-color:' + colorD + ';color:'+ colorD + ';">11</td>'
 
             str = '<tr>'
-            if ( (sentence_index !== null) && (sentence_index === i)) {
+            if ( (sentenceIndex !== null) && (sentenceIndex === i)) {
                 str = '<tr style="background-color:#ffc107;">'
             }
-            str += '<td style="background-color:#FFFFFF;">' + emotion_image_tag + "</td>"
-            + v_tag
-            + a_tag
-            + d_tag
+            str += '<td style="background-color:#FFFFFF;">' + emotionImageTag + "</td>"
+            + vTag
+            + aTag
+            + dTag
              + '<td id="row_' + i + '">' + sentence + "</td>"
             + "</tr>"
-            $("#bottom_table").append(str);
+            bottomTable.append(str);
         }
     }
 
@@ -103,10 +107,9 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
          var rowId = '#row_' + cell_index;
          var container = $('div');
          var scrollTo = $(rowId);
-
-        container.animate({
+         container.animate({
             scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
-        });
+         });
     });
 
 });
