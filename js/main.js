@@ -23,6 +23,8 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
     function horizontal_view() {
 
         var topTable = $("#top_table")
+        topTable.empty(); // to remove any previous column selection
+
            // V line
          str =  horizontal_vad('V')
          topTable.append(str);
@@ -97,12 +99,24 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
     /*  when a column is clicked in the horizontal panel :
           - the vertical table is scrolled until the corresponding sentence is visible
     */
-    $("#top_table tr:has(td)").click(function(e) {
-         $("#top_table td").removeClass("highlight");
+     $("#top_table tr:has(td)").click(clickOnUpperTable);
+
+    function clickOnUpperTable(e) {
+         horizontal_view(); // to remove any previous column selection
+         $("#top_table tr:has(td)").click(clickOnUpperTable);
+
+         $("#top_table td").removeClass("selected");
          var clickedCell= $(e.target).closest("td");
-         //clickedCell.addClass("highlight");
+         //clickedCell.addClass("selected");
+         //clickedCell.attr("highlight");
+
          var cell_index = e.target.cellIndex
          vertical_view(cell_index);
+
+         $("td, th").filter(":nth-child(" + (cell_index + 1) + ")")
+         .css("background-color", "#ffc107")
+         .css("color", "#ffc107")
+         //.addClass("selected");
 
          var rowId = '#row_' + cell_index;
          var container = $('div');
@@ -110,6 +124,6 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
          container.animate({
             scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
          });
-    });
+    }
 
 });

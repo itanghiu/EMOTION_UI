@@ -16,3 +16,14 @@ img {
     width:15px
     height:15px
 }
+
+#highlight td {
+        border: 1px solid #ff0000;
+}
+
+.selected {
+        border-left: 2px solid #000000;
+        border-right: 2px solid #000000;
+        background-color: #ffc107;
+        color: #ffc107;
+}
