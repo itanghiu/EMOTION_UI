@@ -15,12 +15,27 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
             var v_tag = '<td style="background-color:' + color_v + ';color:' + color_v + '";>11</td>'
             str = str + v_tag
          }
-         str = str + "</tr>"
+         str += "</tr>"
          return str
     }
 
+    function filter_table() {
+
+         var filterTable = $("#filter_table")
+         str = "<tr>"
+         emotions = Object.keys(constants.EMOTION_DICT)
+         for (row = 0; row < 3; row++) {
+         //for (const [emotion, value] of Object.entries(data.EMOTION_DICT)) {
+            var v_tag = '<tr><td>' + emotions[3*row + 0] + '</td>'
+                    + '<td>' + emotions[3*row + 1] + '</td>'
+                    + '<td>' + emotions[3*row + 2] + '</td></tr>'
+            str += v_tag
+         }
+         filterTable.append(str);
+    }
+
     // horizontal display
-    function horizontal_view() {
+    function horizontal_table() {
 
         var topTable = $("#top_table")
         topTable.empty(); // to remove any previous column selection
@@ -41,25 +56,23 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
          str = "<tr>"
          for (i = 0; i < data.SENTENCES.length; i++) {
             emotion = data.EMOTIONS[i]
-            emotion_string = constants.EMOTION_DICT2[emotion]
+            emotion_string = constants.EMOTION_IMAGE_DICT[emotion]
             var emotion_image_tag = '<img src="' + constants.IMAGE_DIR + '/' + emotion_string + '.png" width="15" height="15">'
             str += '<td style="background-color:#FFFFFF;">' + emotion_image_tag + "</td>"
-            //var emotion_image_tag = constants.IMAGE_DIR + '/' + emotion_string
-            //str += '<td style="background: url(' + emotion_image_tag + ') left center no-repeat;background-color:#FFFFFF;"/>'
          }
          str += "</tr>"
          topTable.append(str);
      }
 
     // vertical display
-    function vertical_view(sentenceIndex) {
+    function vertical_table(sentenceIndex) {
 
         var bottomTable = $("#bottom_table")
         bottomTable.empty();
         for (i = 0; i < data.SENTENCES.length; i++) {
             sentence = data.SENTENCES[i]
             emotion = data.EMOTIONS[i]
-            emotion_string = constants.EMOTION_DICT2[emotion]
+            emotion_string = constants.EMOTION_IMAGE_DICT[emotion]
             V = data.V[i]
             A =  data.A[i]
             D =  data.D[i]
@@ -89,21 +102,24 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
         }
     }
 
-    horizontal_view();
-    vertical_view();
+    filter_table()
+    horizontal_table();
+    vertical_table();
 
-    $("#top_table tr:has(td)").mouseover(function(e) {
-         $(this).css("cursor", "pointer");
-    });
+    $("#top_table tr:has(td)").mouseover(mouseOverUpperTable);
+    $("#top_table tr:has(td)").click(clickOnUpperTable);
+
+    function mouseOverUpperTable(e) {
+        $(this).css("cursor", "pointer");
+    }
 
     /*  when a column is clicked in the horizontal panel :
           - the vertical table is scrolled until the corresponding sentence is visible
     */
-     $("#top_table tr:has(td)").click(clickOnUpperTable);
-
     function clickOnUpperTable(e) {
-         horizontal_view(); // to remove any previous column selection
+         horizontal_table();
          $("#top_table tr:has(td)").click(clickOnUpperTable);
+         $("#top_table tr:has(td)").mouseover(mouseOverUpperTable);
 
          $("#top_table td").removeClass("selected");
          var clickedCell= $(e.target).closest("td");
@@ -111,7 +127,7 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
          //clickedCell.attr("highlight");
 
          var cell_index = e.target.cellIndex
-         vertical_view(cell_index);
+         vertical_table(cell_index);
 
          $("td, th").filter(":nth-child(" + (cell_index + 1) + ")")
          .css("background-color", "#ffc107")
