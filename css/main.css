@@ -18,7 +18,7 @@ table #bottom_table {
     border-spacing: 0 15px;
 }
 
-table#filter_table {
+#filter_table td, #filter_table tr {
     background-color: "red"
     border-collapse:collapse;
     border-spacing: 0 15px 10px 10px;

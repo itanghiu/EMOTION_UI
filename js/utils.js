@@ -2,7 +2,16 @@
 function Utils() {
 }
 
-Utils.updateColor = function (hexColor){
+Utils.arrayStringRemove= function (arr, value) {
+
+       const index = arr.indexOf(value);
+        if (index > -1) {
+            arr.splice(index, 1);
+        }
+        return arr
+    }
+
+Utils.convertColorToGrey = function (hexColor){
 
         saturation = 0
         var col = hexadecimalToRgb(hexColor);

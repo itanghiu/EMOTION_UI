@@ -4,16 +4,21 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
     // ensure that the function is called once all the DOM elements
     // of the page are ready to be used.
 
+    emotion_filters = []
+
     function horizontal_vad(_axis) {
 
-           str = "<tr>"
+         str = "<tr>"
          for (i = 0; i < data.SENTENCES.length; i++) {
-            map = {'V':data.V[i], 'A':data.A[i], 'D':data.D[i] }
+            map = {'V':data.V[i], 'A':data.A[i], 'D':data.D[i], 'emotion_index':data.EMOTIONS[i] }
+            emotion_index = map['emotion_index']
+            emotion = constants.EMOTION_IMAGE_DICT[emotion_index]
+            emotion_selected = emotion_filters.includes(emotion)
             axis = map[_axis]
             color_v = constants.COLOR_VAD[axis]
-            color_v = Utils.updateColor(color_v.substring(1))
+            color_v = (!emotion_selected) ? Utils.convertColorToGrey(color_v.substring(1)) : color_v
             var v_tag = '<td style="background-color:' + color_v + ';color:' + color_v + '";>11</td>'
-            str = str + v_tag
+            str += v_tag
          }
          str += "</tr>"
          return str
@@ -22,14 +27,16 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
     function filter_table() {
 
          var filterTable = $("#filter_table")
-         str = "<tr>"
+         str = ''
          emotions = Object.keys(constants.EMOTION_DICT)
          for (row = 0; row < 3; row++) {
-         //for (const [emotion, value] of Object.entries(data.EMOTION_DICT)) {
-            var v_tag = '<tr><td>' + emotions[3*row + 0] + '</td>'
-                    + '<td>' + emotions[3*row + 1] + '</td>'
-                    + '<td>' + emotions[3*row + 2] + '</td></tr>'
-            str += v_tag
+             //for (const [emotion, value] of Object.entries(data.EMOTION_DICT)) {
+             var html = '<tr>'
+             + '<td><input type="checkbox" name="emotion" value="' + emotions[3*row + 0] + '"/> <label for="emotion">' + emotions[3*row + 0] + '</label> </td>'
+             + '<td><input type="checkbox" name="emotion" value="' + emotions[3*row + 1]+  '"/> <label for="emotion">' + emotions[3*row + 1] + '</label> </td>'
+             + '<td><input type="checkbox" name="emotion" value="' + emotions[3*row + 2]+ '"/> <label for="emotion">' + emotions[3*row + 2] + '</label> </td>'
+             + '</tr>'
+             str += html
          }
          filterTable.append(str);
     }
@@ -55,9 +62,9 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
          // Emotions
          str = "<tr>"
          for (i = 0; i < data.SENTENCES.length; i++) {
-            emotion = data.EMOTIONS[i]
-            emotion_string = constants.EMOTION_IMAGE_DICT[emotion]
-            var emotion_image_tag = '<img src="' + constants.IMAGE_DIR + '/' + emotion_string + '.png" width="15" height="15">'
+            emotion_index = data.EMOTIONS[i]
+            emotion = constants.EMOTION_IMAGE_DICT[emotion_index]
+            var emotion_image_tag = '<img src="' + constants.IMAGE_DIR + '/' + emotion + '.png" width="15" height="15">'
             str += '<td style="background-color:#FFFFFF;">' + emotion_image_tag + "</td>"
          }
          str += "</tr>"
@@ -80,9 +87,9 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
             colorV = constants.COLOR_VAD[V]
             colorA = constants.COLOR_VAD[A]
             colorD = constants.COLOR_VAD[D]
-            colorV = Utils.updateColor(colorV.substring(1))
-            colorA = Utils.updateColor(colorA.substring(1))
-            colorD = Utils.updateColor(colorD.substring(1))
+            colorV = Utils.convertColorToGrey(colorV.substring(1))
+            colorA = Utils.convertColorToGrey(colorA.substring(1))
+            colorD = Utils.convertColorToGrey(colorD.substring(1))
 
             var vTag = '<td style="background-color:' + colorV + ';color:'+ colorV + ';">11</td>'
             var aTag = '<td style="background-color:' + colorA + ';color:'+ colorA + ';">11</td>'
@@ -105,6 +112,22 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
     filter_table()
     horizontal_table();
     vertical_table();
+
+    // checkbox event listener
+    $('input[type=checkbox][name=emotion]').change(function() {
+            emotion = this.value
+            if ($(this).is(':checked')) {
+                //alert(`${this.value} is checked`);
+                emotion_filters.push(emotion)
+            }
+            else {
+                //alert(`${this.value} is unchecked`);
+                emotion_filters = Utils.arrayStringRemove(emotion_filters, emotion)
+            }
+            horizontal_table();
+            $("#top_table tr:has(td)").click(clickOnUpperTable);
+            $("#top_table tr:has(td)").mouseover(mouseOverUpperTable);
+    });
 
     $("#top_table tr:has(td)").mouseover(mouseOverUpperTable);
     $("#top_table tr:has(td)").click(clickOnUpperTable);

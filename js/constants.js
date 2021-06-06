@@ -3,8 +3,8 @@ var constants = {
    IMAGE_DIR : 'images',
    EMOTION_DICT : {anger: 0, sadness: 1, happiness: 2, disgust: 3, fear: 4, surprise: 5, frustration: 6,
                 excited: 7, neutral: 8, other:9},
-   EMOTION_IMAGE_DICT : { 0:'b_anger',  1:'b_sadness', 2:'b_happiness', 3:'b_disgust',
-   4:'b_fear', 5:'b_surprise', 6:'b_frustrated' , 7:'b_excited', 8:'b_neutral', 9:'other'},
+   EMOTION_IMAGE_DICT : { 0:'anger',  1:'sadness', 2:'happiness', 3:'disgust',
+   4:'fear', 5:'surprise', 6:'frustrated' , 7:'excited', 8:'neutral', 9:'other'},
    COLOR_VAD : {0: '#ffebee', 0.5: '#ef9a9a', 1: '#ef5350', 1.5: '#e53935', 2: '#ff5722', 2.5:'#e64a19',
    3: '#ef6c00', 3.5: '#ff9800', 4:'#ff9800'}
 
