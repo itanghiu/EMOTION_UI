@@ -1,3 +1,11 @@
+//--------------------------------------------------------
+//
+//
+//      AUTHOR : I-Tang HIU
+//      MS IA
+//
+//
+//-------------------------------------------------------
 
 function Utils() {
 }
@@ -9,7 +17,7 @@ Utils.arrayStringRemove= function (arr, value) {
             arr.splice(index, 1);
         }
         return arr
-    }
+}
 
 Utils.convertColorToGrey = function (hexColor){
 
