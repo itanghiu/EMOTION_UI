@@ -140,11 +140,9 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
     $('input[type=checkbox][name=emotion]').change(function() {
             emotion = this.value
             if ($(this).is(':checked')) {
-                //alert(`${this.value} is checked`);
                 emotion_filters.push(emotion)
             }
             else {
-                //alert(`${this.value} is unchecked`);
                 emotion_filters = Utils.arrayStringRemove(emotion_filters, emotion)
             }
             horizontal_table();
@@ -176,10 +174,9 @@ $(function () { // a short-hand for: $(document).ready(function() { ... });
          var cell_index = e.target.cellIndex
          vertical_table(cell_index);
 
-         $("td, th").filter(":nth-child(" + (cell_index + 1) + ")")
+         $("#top_table td").filter(":nth-child(" + (cell_index + 1) + ")")
          .css("background-color", "#ffc107")
          .css("color", "#ffc107")
-         //.addClass("selected");
 
          var rowId = '#row_' + cell_index;
          var container = $('div');
