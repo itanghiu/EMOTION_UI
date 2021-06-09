@@ -1,11 +1,3 @@
-//--------------------------------------------------------
-//
-//
-//      AUTHOR : I-Tang HIU
-//      MS IA
-//
-//
-//-------------------------------------------------------
 table {
     margin:0 auto;
      padding-top: 30px;
@@ -17,7 +9,7 @@ table {
 
 #filter_table td, #filter_table tr {
     background-color: "red"
-    border-collapse:collapse;
+    #border-collapse:collapse;
     border-spacing: 0 15px 10px 10px;
 }
 
