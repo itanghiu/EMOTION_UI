@@ -1,0 +1,242 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Emotion visualizer project
+\end_layout
+
+\begin_layout Standard
+Let's consider the following context: In a company, meetings are audio recorded.
+ An AI model transcripts the audio to text and characterises every sentence
+ with an emotion (categorical or VAD).
+ 
+\end_layout
+
+\begin_layout Standard
+An emotion can be represented under 2 forms: with categorical emotions like
+ Anger, Happiness, sadness,..., with a triplet of 3 VAD numbers ranging from
+ 0 to 4 : (Valence, Arousal, Dominance).
+\end_layout
+
+\begin_layout Standard
+How can this company represent emotions associated to sentences in a meeting
+ through a software interface ? 
+\end_layout
+
+\begin_layout Subsubsection*
+User requirements: 
+\end_layout
+
+\begin_layout Standard
+Users (managers, HR people,..) need an easy way to :
+\end_layout
+
+\begin_layout Standard
+• have an overview of the emotions expressed throughout the whole meeting
+ 
+\end_layout
+
+\begin_layout Standard
+• be able to visualize only the emotions they are interested in, 
+\end_layout
+
+\begin_layout Standard
+• read the text of the sentences where the emotions they are interested
+ in, have been expressed.
+\end_layout
+
+\begin_layout Subsection*
+The user interface 
+\end_layout
+
+\begin_layout Standard
+The interface is made of three parts which are from top to bottom :
+\end_layout
+
+\begin_layout Itemize
+the "emotion filter" panel,
+\end_layout
+
+\begin_layout Itemize
+the "meeting overview" panel
+\end_layout
+
+\begin_layout Itemize
+the "vertical meeting" panel
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename emotion_visualizer.PNG
+	scale 50
+
+\end_inset
+
+
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+The "Meeting overview" panel
+\end_layout
+
+\begin_layout Standard
+This panel allows to have an overview of the meeting.
+ Each column corresponds to a sentence of the meeting, the first column
+ corresponding to the first sentence and the last column corresponds to
+ the last sentence.
+ For a given column, the highest square represents the Valence, the square
+ below the Arousal , the square below the Dominance and the last square
+ represents the emotion represented as an emoticon.
+\end_layout
+
+\begin_layout Standard
+The values of the three VAD axis are represented thanks to a matching between
+ a color and a numerical value taken in {0, 0.5, 1, 1.5, 2, 2.5,3, 3.5, 4}.
+ The value 0 corresponds to the white color, whereas the value 4 corresponds
+ to the orange color.
+ To visualize the value of one of the 3 axis (V, A or D), the user just
+ has to hover the mouse over the corresponding square.
+\end_layout
+
+\begin_layout Standard
+Initially, all the squares are grey.
+ It is thanks to the emotion filter that the user can make the emotion he
+ is interested in , pop up (the column becomes colored).
+\end_layout
+
+\begin_layout Subsubsection*
+The "Emotion filter" panel
+\end_layout
+
+\begin_layout Standard
+The user chooses the emotion he is interested in, by checking one or several
+ emotions in the filter.
+ For example, if he wants to visualize all the places in the meeting where
+ the participants have expressed anger, he will check "Anger": all the columns
+ whose emotion are "Anger" will go from grey to color.
+\end_layout
+
+\begin_layout Subsubsection*
+The "Vertical meeting" panel
+\end_layout
+
+\begin_layout Standard
+The "Meeting overview" panel allows the user to have an overview of the
+ emotions during the meeting.
+ However, he can not know what has been said.
+ To read the text of the meeting , the user just has to click on the correspondi
+ng column: the text corresponding to the clicked column will be displayed
+ in the scrollable "Vertical meeting" panel.
+\end_layout
+
+\begin_layout Subsection*
+The interface implementation
+\end_layout
+
+\begin_layout Standard
+This interface has been implemented using the standard web technologies,
+ that is HTML, CSS, Javascript and JQuery.
+\end_layout
+
+\begin_layout Subsubsection*
+Code Limitations
+\end_layout
+
+\begin_layout Standard
+This interface is a proof of concept.
+ Indeed, the data do not come from an API but have been hard coded in the
+ code.
+ 
+\end_layout
+
+\begin_layout Standard
+The code requires a refactoring.
+ Indeed, when the user clicks on a column or when a filter is checked ,
+ the "meeting overview"and "left panel" is completely redrawn.
+ This is not best practice, as recreating all the components is time-consuming.
+ It would have been more astute to attribute a class .colored or .uncolored
+ to the corresponding HTML elements.
+ This choice has been taken because I did not have enough time to correctly
+ implement this part of the code.
+\end_layout
+
+\end_body
+\end_document

@@ -1,3 +1,6 @@
+### Emotion visualizer
+This app hs been tested with Firefox, Edge and Chrome.
+
 ### Start a web server:
 > python -m http.server 8080
 
